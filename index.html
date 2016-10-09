@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery.js"></script>
+</head>
+<body>
+    <canvas width="400" height="400" class="canvas"></canvas>
+    <script>
+        var canvas=$('.canvas').get(0);
+        var cxt=canvas.getContext('2d');
+        function clock(){
+            cxt.clearRect(0,0,400,400);
+        function move(){
+            cxt.beginPath();
+            cxt.arc(0,0,200,0,2*Math.PI);
+            cxt.font="20px 苹方";
+            cxt.fillText("Trust Yourself!", -69, 94);
+            cxt.fillStyle = "Black";
+            cxt.shadowColor="rgba(0, 0, 0, 0.5)";
+            // cxt.shadowOffsetX = 2;
+            // cxt.shadowOffsetY = 2;
+            // cxt.shadowBlur = 4;
+            cxt.closePath();
+            cxt.stroke();
+        }
+        cxt.save();
+        cxt.translate(200,200);
+            move();
+        for(var i=1;i<=60;i++){
+            cxt.rotate(Math.PI/30);
+            if(i%5==0){
+                cxt.moveTo(0,-200);
+                cxt.lineTo(0,-180);
+            }else{
+                cxt.moveTo(0,-200);
+                cxt.lineTo(0,-190)
+            }
+        }
+        cxt.stroke();
+        cxt.restore();
+//获取时间
+        var date=new Date();
+        //秒针
+        cxt.save();
+        cxt.translate(200,200);
+        cxt.lineCap='round';
+        cxt.beginPath();
+        var s=date.getSeconds();
+        cxt.rotate(s*2*Math.PI/60);
+        cxt.moveTo(15,0);
+        cxt.arc(0,0,15,0,2*Math.PI);
+        cxt.lineWidth=3;
+        cxt.moveTo(0,15);
+        cxt.lineTo(0,40);
+        cxt.moveTo(0,-15);
+        cxt.lineTo(0,-160);
+            cxt.stroke();
+        cxt.closePath();
+
+        cxt.restore();
+        //分针
+        cxt.save();
+        cxt.translate(200,200);
+        cxt.lineCap="round";
+        cxt.lineWidth=5;
+        cxt.beginPath();
+        var m=date.getMinutes();
+        cxt.rotate((m*60+s)*2*Math.PI/3600);
+        cxt.moveTo(10,0);
+        cxt.arc(0,0,10,0,2*Math.PI);
+        cxt.moveTo(0,-10);
+        cxt.lineTo(0,-130);
+        cxt.moveTo(0,10);
+        cxt.lineTo(0,30);
+        cxt.stroke();
+        cxt.closePath();
+        cxt.restore();
+//            时针
+            cxt.save();
+            cxt.translate(200,200);
+            cxt.lineCap="round";
+            cxt.lineWidth=7;
+            cxt.beginPath();
+            var h=date.getHours();
+            cxt.rotate((h*3600+m*60+s)*2*Math.PI/(3600*12));
+            cxt.moveTo(5,0);
+            cxt.arc(0,0,5,0,2*Math.PI);
+            cxt.moveTo(0,-5);
+            cxt.lineTo(0,-100);
+            cxt.moveTo(0,5);
+            cxt.lineTo(0,20);
+            cxt.stroke();
+            cxt.closePath();
+            cxt.restore();
+        }
+
+        setInterval(clock,1000);
+
+    </script>
+    <style>
+        .canvas{
+            position: absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            margin:auto;
+            background: url("bg.png") center center;
+        }
+    </style>
+</body>
+</html>
